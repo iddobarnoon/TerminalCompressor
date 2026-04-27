@@ -81,6 +81,6 @@ def encodeFile(path: str):
 
 
 if __name__ == "__main__":
-    encodeFile(r"C:\Users\iddob\Documents\CS Projects\TerminalCompressor\test.txt")
+    encodeFile(r"C:\Users\iddob\Documents\CS Projects\TerminalCompressor\smallinput.txt")
 
 

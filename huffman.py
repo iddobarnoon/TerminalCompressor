@@ -1,4 +1,5 @@
 import heapq
+from typing import overload
 
 
 class HuffTreeNode:
@@ -30,7 +31,7 @@ def traverse(node, arr, currCode):
 
 
 
-def createHuffmanTree(freqTable):
+def createHuffmanTree(freqTable: list):
     #Create a node for every character, add to a minpq
     #We assign the two minimum frequencies, combine them and create a parent node to the two
     #Continue until we have only 2 left.
@@ -62,4 +63,31 @@ def createHuffmanTree(freqTable):
     codes = [''] * length
     for index, code in pairs:
         codes[index] = code
+    return codes
+
+def createHuffmanTreeDict(freqTable: dict):
+    keys = list(freqTable.keys())
+    length = len(keys)
+
+    minpq = []
+
+    for i in range(length):
+        tmp: HuffTreeNode = HuffTreeNode(freqTable[keys[i]], i)
+        heapq.heappush(minpq, tmp)
+
+    while len(minpq) >= 2:
+        firstOfTwo: HuffTreeNode = heapq.heappop(minpq)
+        secondOfTwo: HuffTreeNode = heapq.heappop(minpq)
+
+        parentNode: HuffTreeNode = HuffTreeNode(firstOfTwo.freq + secondOfTwo.freq, min(firstOfTwo.index, secondOfTwo.index), firstOfTwo, secondOfTwo)
+        heapq.heappush(minpq, parentNode)
+
+    root = minpq[0]
+
+    pairs = []
+    traverse(root, pairs, "")
+
+    codes = {}
+    for index, code in pairs:
+        codes[keys[index]] = code
     return codes
